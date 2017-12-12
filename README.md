@@ -1,0 +1,1 @@
+# Docker Sonar Runner
