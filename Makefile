@@ -1,11 +1,11 @@
 CWD := $(shell pwd)
 TAG := stable
-IMAGE := "jamrizzi/sonar-runner:$(TAG)"
+IMAGE := "codejamninja/sonar-runner:$(TAG)"
 SOME_CONTAINER := $(shell echo some-$(IMAGE) | sed 's/[^a-zA-Z0-9]//g')
 DOCKERFILE := $(CWD)/$(TAG)/Dockerfile
 
 .PHONY: all
-all: clean deps build
+all: clean build
 
 .PHONY: build
 build:
@@ -39,10 +39,3 @@ clean:
 	-@ rm -rf ./stuff/to/clean &>/dev/null || true
 	@echo ::: CLEAN :::
 
-.PHONY: deps
-deps: docker
-	@echo ::: DEPS :::
-.PHONY: docker
-docker:
-	@if ! o=$$(which docker); then curl -L https://get.docker.com | bash; fi
-	@echo ::: DOCKER :::
