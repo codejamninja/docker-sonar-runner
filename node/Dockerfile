@@ -1,21 +1,18 @@
-FROM openjdk:8-jre-alpine
+FROM node:12.14.1-stretch
 
-ENV TAG=stable \
-    SONAR_RUNNER_VERSION=2.4
+ENV SONAR_RUNNER_VERSION=4.2.0.1873
 
-LABEL image=jamrizzi/node-sonar-runner:${TAG} \
-      maintainer="Jam Risser <jam@jamrizzi.com>" \
-      base=alpine:3.7
+LABEL image=codejamninja/sonar-scanner \
+      maintainer="Jam Risser <jam@codejam.ninja>" \
+      base=ubuntu:stretch
 
-RUN apk add --no-cache \
-        nodejs \
-        tini
-
+RUN apt-get update && apt-get install -y \
+  openjdk-8-jdk \
+  && rm -rf /var/lib/apt/lists/*
 RUN cd /tmp && \
-    wget http://repo1.maven.org/maven2/org/codehaus/sonar/runner/sonar-runner-dist/${SONAR_RUNNER_VERSION}/sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip && \
-    unzip sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip && \
-    cp -r /tmp/sonar-runner-${SONAR_RUNNER_VERSION}/* / && \
-    cp -r /tmp/sonar-runner-${SONAR_RUNNER_VERSION}/.* / && \
-    rm -rf /tmp/*
+  wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_RUNNER_VERSION}-linux.zip && \
+  unzip sonar-scanner-cli-${SONAR_RUNNER_VERSION}-linux.zip && \
+  mv sonar-scanner-${SONAR_RUNNER_VERSION}-linux /opt/sonar-scanner && \
+  ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner
 
-ENTRYPOINT ["/sbin/tini", "--", "/app/bin/sonar-runner"]
+ENTRYPOINT ["/sbin/tini", "--", "/app/bin/sonar-scanner"]
