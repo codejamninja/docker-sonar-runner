@@ -1,9 +1,8 @@
-FROM openjdk:8-jre-alpine
+FROM sonarsource/sonar-scanner-cli:4.3
 
-ENV TAG=stable \
-    SONAR_RUNNER_VERSION=2.4
+ENV TAG=stable
 
-LABEL image=jamrizzi/node-sonar-runner:${TAG} \
+LABEL image=codejamninja/node-sonar-scanner:${TAG} \
       maintainer="Jam Risser <jam@jamrizzi.com>" \
       base=alpine:3.7
 

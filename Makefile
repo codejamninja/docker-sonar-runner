@@ -38,4 +38,3 @@ essh:
 clean:
 	-@ rm -rf ./stuff/to/clean &>/dev/null || true
 	@echo ::: CLEAN :::
-
