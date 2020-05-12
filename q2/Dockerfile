@@ -1,4 +1,4 @@
-FROM kiwicom/sonar-scanner:4.3.0
+FROM sonarsource/sonar-scanner-cli:4.3
 
 LABEL image=codejamninja/sonar-scanner:q2 \
       maintainer="Jam Risser <jam@jamrizzi.com>" \
